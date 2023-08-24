@@ -1,0 +1,17 @@
+name: Docker Compose Build
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your repository's default branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Build and Run Docker Compose
+      run: docker-compose up -d --build
