@@ -22,14 +22,36 @@ public class MembershipService {
 	 * @return A CompletableFuture containing a fully populated MembershipList object.
 	 */
 	public CompletableFuture<MembershipList> fetchAllMembershipsWithUsers() {
-		return membershipBackendClient.fetchMemberships()
-				.thenCompose(members -> {
-					CompletableFuture<?>[] userCalls = members.getMemberships().stream()
-							.map(member -> membershipBackendClient.fetchUser(member.getUserId())
-									.thenApply(member::setUser))
-							.toArray(CompletableFuture<?>[]::new);
-					return CompletableFuture.allOf(userCalls)
-							.thenApply(nil -> members);
-				});
-	}
+    CompletableFuture<MembershipList> membershipsFuture = membershipBackendClient.fetchMemberships();
+    CompletableFuture<UserList> usersFuture = membershipBackendClient.fetchUsers();
+        
+    return CompletableFuture.allOf(membershipsFuture, usersFuture)
+        .thenApply(nil -> {
+            MembershipList memberships = membershipsFuture.join();
+            UserList users = usersFuture.join();
+
+            Map<String, User> userMap = users.getUsers().stream()
+                .collect(Collectors.toMap(User::getId, Function.identity()));
+
+            memberships.getMemberships().forEach(member -> {
+                User user = userMap.get(member.getUserId());
+                member.setUser(user != null ? user : null); 
+            });
+
+            return memberships;
+        });
+}
+
+
+	// 	return membershipBackendClient.fetchMemberships()
+	// 			.thenCompose(members -> {
+	// 				CompletableFuture<?>[] userCalls = members.getMemberships().stream()
+	// 						.map(member -> membershipBackendClient.fetchUser(member.getUserId())
+	// 								.thenApply(member::setUser))
+	// 						.toArray(CompletableFuture<?>[]::new);
+	// 				return CompletableFuture.allOf(userCalls)
+	// 						.thenApply(nil -> members);
+	// 			});
+	// }
+
 }

@@ -44,3 +44,11 @@ To run the tests for the java-edge service, you can run the following command fr
 ```bash
 docker-compose -f docker-compose.test.yml up --build
 ```
+
+Notes Added by Mahek Agarwal:
+
+1.Added a call for /users api in java MembershipService file to fetch the users all at once and further code changes based on that
+2.Added lowercase code change to handle email in case insenitive way
+3.The close button of user details was not working because the toggle function was not handled properly did the necssary changes.
+4.Testing done by launching the app, and testing it from UI.
+

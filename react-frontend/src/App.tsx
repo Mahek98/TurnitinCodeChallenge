@@ -16,7 +16,7 @@ const App: FC<any> = () => {
   }
 
   const updateSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    setSearch(event.target.value.toLowerCase());
   }
 
   const loadDetailsModal = (membership: Membership) => {
@@ -48,7 +48,7 @@ const App: FC<any> = () => {
               <tbody>
                   { memberships.filter(membership => !search
                     || membership.user?.name.toLowerCase().includes(search.toLowerCase())
-                    || membership.user?.email.includes(search))
+                    || membership.user?.email.toLowerCase().includes(search))
                     .map(membership => (
                       <tr key={membership.id}>
                         <td>{membership.user?.name}</td>
@@ -65,8 +65,8 @@ const App: FC<any> = () => {
         }
         { activeMembership &&
           (
-            <Modal isOpen={!!activeMembership}>
-              <ModalHeader toggle={e => closeDetailsModal}>User Details</ModalHeader>
+            <Modal isOpen={!!activeMembership} toggle={closeDetailsModal}>
+              <ModalHeader toggle={closeDetailsModal}>User Details</ModalHeader>
               <ModalBody>
                 <div>
                   <p>Name: {activeMembership.user?.name}</p>
