@@ -41,17 +41,4 @@ public class MembershipService {
             return memberships;
         });
 }
-
-
-	// 	return membershipBackendClient.fetchMemberships()
-	// 			.thenCompose(members -> {
-	// 				CompletableFuture<?>[] userCalls = members.getMemberships().stream()
-	// 						.map(member -> membershipBackendClient.fetchUser(member.getUserId())
-	// 								.thenApply(member::setUser))
-	// 						.toArray(CompletableFuture<?>[]::new);
-	// 				return CompletableFuture.allOf(userCalls)
-	// 						.thenApply(nil -> members);
-	// 			});
-	// }
-
 }
