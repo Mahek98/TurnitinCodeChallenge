@@ -9,6 +9,7 @@ import integrations.turnitin.com.membersearcher.model.User;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
