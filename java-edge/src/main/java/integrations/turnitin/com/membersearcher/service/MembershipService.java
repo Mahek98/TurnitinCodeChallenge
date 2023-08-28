@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import integrations.turnitin.com.membersearcher.client.MembershipBackendClient;
 import integrations.turnitin.com.membersearcher.model.MembershipList;
 import integrations.turnitin.com.membersearcher.model.UserList;
-import integrations.turnitin.com.membersearcher.model.User.java;
+import integrations.turnitin.com.membersearcher.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
